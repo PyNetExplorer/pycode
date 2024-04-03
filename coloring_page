@@ -1,0 +1,37 @@
+from PIL import Image, ImageDraw, ImageFont
+
+# Function to generate a blank image with text
+def generate_coloring_page(word):
+    # Image dimensions (US Letter size in portrait mode)
+    width, height = 8.5 * 300, 11 * 300  # 300 DPI
+    
+    # Create a white background image
+    image = Image.new("RGB", (int(width), int(height)), "white")
+    draw = ImageDraw.Draw(image)
+    
+    # Choose a font and size
+    font_size = 50
+    font = ImageFont.truetype("arial.ttf", font_size)
+    
+    # Calculate text size
+    text_width, text_height = draw.textsize(word, font=font)
+    
+    # Calculate text position
+    x = (width - text_width) / 2
+    y = (height - text_height) / 2
+    
+    # Draw the text on the image
+    draw.text((x, y), word, fill="black", font=font)
+    
+    return image
+
+# Main function
+def main():
+    word = input("Enter a word for the coloring page: ")
+    coloring_page = generate_coloring_page(word)
+    coloring_page.show()
+    coloring_page.save(f"{word}_coloring_page.png")
+
+if __name__ == "__main__":
+    main()
+
